@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اختبار تشخيصي – الصف الخامس</title>
+<style>
+:root{--bg:#f3f6f1;--card:#fff;--fg:#1d2a24;--muted:#5d6b64;--line:#d5ded7;--accent:#1f6f54;--on:#fff;--ok:#1f7a3d;--okbg:#e3f3e8;--bad:#b3261e;--badbg:#fbe7e5;--mid:#9a6a00;--midbg:#fbf0d4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141b17;--card:#1e2823;--fg:#e8efe9;--muted:#9fb0a6;--line:#33433a;--accent:#5fc59b;--on:#0e1a14;--ok:#7fd49a;--okbg:#1b3324;--bad:#ff9d96;--badbg:#3a1f1d;--mid:#f0c35a;--midbg:#3a3015}}
+:root[data-theme="dark"]{--bg:#141b17;--card:#1e2823;--fg:#e8efe9;--muted:#9fb0a6;--line:#33433a;--accent:#5fc59b;--on:#0e1a14;--ok:#7fd49a;--okbg:#1b3324;--bad:#ff9d96;--badbg:#3a1f1d;--mid:#f0c35a;--midbg:#3a3015}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Noto Naskh Arabic","Geeza Pro","Segoe UI",Tahoma,sans-serif;font-size:18px;line-height:1.8}
+main{max-width:640px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:26px;margin:8px 0 6px;line-height:1.5}
+h2{font-size:21px;margin:22px 0 8px}
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}
+input[type=text]{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);margin-top:8px}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--accent);padding:11px 20px;background:var(--accent);color:var(--on)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.4;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.tag{display:inline-block;font-size:14px;padding:1px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.opt{display:block;width:100%;text-align:right;margin-top:10px;background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:12px 14px}
+.opt.sel{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+[dir=ltr] .opt{text-align:left}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}
+.b{font-size:14px;padding:1px 12px;border-radius:20px;white-space:nowrap}
+.strong{background:var(--okbg);color:var(--ok)}.mid{background:var(--midbg);color:var(--mid)}.weak{background:var(--badbg);color:var(--bad)}
+.big{font-size:44px;line-height:1.2;margin:0}
+.rev{border-top:1px solid var(--line);padding:10px 0}
+.rev b.w{color:var(--bad)}.rev b.r{color:var(--ok)}
+@media print{button{display:none}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+var SUBJ=["الرياضيات","اللغة العربية","العلوم","الاجتماعيات","اللغة الإنجليزية"];
+var Q=[
+{s:0,k:"الأعداد الكبيرة",q:"في العدد 3,405,260 قيمة الرقم 4 هي:",o:["400,000","4,000","40,000","400"],a:0},
+{s:0,k:"الضرب والقسمة",q:"ناتج 345 × 12 يساوي:",o:["3450","4140","4040","4240"],a:1},
+{s:0,k:"الكسور",q:"ناتج 7/8 − 3/8 يساوي:",o:["4/16","10/8","1/2","3/4"],a:2},
+{s:0,k:"الأعداد العشرية",q:"ناتج 0.5 + 0.25 يساوي:",o:["0.30","0.525","7.5","0.75"],a:3},
+{s:0,k:"الهندسة والقياس",q:"مستطيل طوله 8 سم وعرضه 5 سم، فمساحته:",o:["13 سم²","26 سم²","40 سم²","80 سم²"],a:2},
+{s:0,k:"المسائل الكلامية",q:"مع سامر 120 ليرة، اشترى 3 دفاتر ثمن الواحد 25 ليرة. كم ليرة بقيت معه؟",o:["45","95","75","55"],a:0},
+{s:1,k:"الحرف والفعل والاسم",q:"الكلمة التي هي حرف في الجملة: ذهب الولد إلى المدرسة",o:["ذهب","الولد","إلى","المدرسة"],a:2},
+{s:1,k:"الفاعل والمفعول به",q:"الفاعل في جملة: نجح المجتهدون",o:["نجح","المجتهدون","لا يوجد فاعل","نجح المجتهدون"],a:1},
+{s:1,k:"الأضداد والمرادفات",q:"ضد كلمة «الشجاعة» هو:",o:["الكرم","الصدق","القوة","الجبن"],a:3},
+{s:1,k:"الإملاء",q:"اختر الصواب: ذهبتُ إلى المدرس_ صباحًا",o:["ة","ه","ت","ـا"],a:0},
+{s:1,k:"فهم المقروء",q:"«يستيقظ علي باكرًا، يتناول فطوره، ثم يحمل حقيبته ويذهب إلى مدرسته مع صديقه.» ماذا يفعل علي بعد تناول الفطور؟",o:["ينام","يحمل حقيبته","يلعب","يشاهد التلفاز"],a:1},
+{s:1,k:"المفرد والجمع",q:"جمع كلمة «كتاب» هو:",o:["كتابات","كتّاب","كتب","أكتاب"],a:2},
+{s:2,k:"الكائنات الحية",q:"أي مما يلي كائن حي؟",o:["الصخرة","الشجرة","الماء","الهواء"],a:1},
+{s:2,k:"حالات المادة",q:"عندما يتجمد الماء يتحول إلى الحالة:",o:["الغازية","السائلة","الصلبة","البلازما"],a:2},
+{s:2,k:"جسم الإنسان",q:"العضو المسؤول عن ضخ الدم في الجسم هو:",o:["الرئتان","المعدة","الكبد","القلب"],a:3},
+{s:2,k:"النبات",q:"تحتاج النباتات الخضراء لصنع غذائها إلى:",o:["ضوء الشمس","الظلام","الحليب","الملح"],a:0},
+{s:2,k:"الضوء",q:"أي مما يلي مصدر طبيعي للضوء؟",o:["المصباح","الشمعة","الشمس","شاشة الهاتف"],a:2},
+{s:2,k:"الكهرباء",q:"أي مادة تُوصل الكهرباء؟",o:["الخشب","النحاس","البلاستيك","المطاط"],a:1},
+{s:0,k:"الأعداد الكبيرة",q:"العدد «ثلاثة ملايين وخمسة وعشرون ألفًا» يُكتب بالأرقام:",o:["3,250,000","3,025,000","3,000,025","325,000"],a:1},
+{s:0,k:"الضرب والقسمة",q:"ناتج 144 ÷ 12 يساوي:",o:["14","11","13","12"],a:3},
+{s:0,k:"الكسور",q:"أي الكسور التالية يساوي 1/2؟",o:["2/4","2/3","3/5","1/4"],a:0},
+{s:0,k:"الأعداد العشرية",q:"ناتج 3.5 − 1.2 يساوي:",o:["2.7","4.7","2.3","1.3"],a:2},
+{s:0,k:"الهندسة والقياس",q:"محيط مربع طول ضلعه 6 سم يساوي:",o:["12 سم","24 سم","36 سم","18 سم"],a:1},
+{s:0,k:"المسائل الكلامية",q:"قطع قطار 240 كم في 4 ساعات بسرعة ثابتة. كم كيلومترًا يقطع في الساعة الواحدة؟",o:["50","80","100","60"],a:3},
+{s:1,k:"الحرف والفعل والاسم",q:"الكلمة التي هي فعل في الجملة: الطالبُ يقرأُ كتابًا",o:["الطالب","يقرأ","كتابًا","لا يوجد فعل"],a:1},
+{s:1,k:"الفاعل والمفعول به",q:"المفعول به في جملة: أكلَ الولدُ التفاحةَ",o:["الولد","أكل","التفاحة","لا يوجد"],a:2},
+{s:1,k:"الأضداد والمرادفات",q:"مرادف كلمة «سرور» هو:",o:["الحزن","الفرح","الغضب","التعب"],a:1},
+{s:1,k:"الإملاء",q:"الكتابة الصحيحة إملائيًا هي:",o:["مسوول","مسأول","مسؤول","مسئل"],a:2},
+{s:1,k:"فهم المقروء",q:"«الشمس مصدر الضوء والحرارة للأرض، وبدونها لا تعيش الكائنات الحية.» ما فكرة النص؟",o:["فوائد القمر","أنواع النجوم","فصول السنة","أهمية الشمس للحياة"],a:3},
+{s:1,k:"المفرد والجمع",q:"مفرد كلمة «مدارس» هو:",o:["مدرسة","درس","دارس","مدارس"],a:0},
+{s:2,k:"الكائنات الحية",q:"أي مما يلي من خصائص الكائن الحي؟",o:["لا يحتاج إلى غذاء","ينمو ويتكاثر","لا يتنفس","لا يتغير أبدًا"],a:1},
+{s:2,k:"حالات المادة",q:"عندما يتبخر الماء يتحول إلى:",o:["جليد","رمل","بخار ماء","ملح"],a:2},
+{s:2,k:"جسم الإنسان",q:"العضو الأساسي المسؤول عن التنفس هو:",o:["الرئتان","القلب","الكلية","المعدة"],a:0},
+{s:2,k:"النبات",q:"الجزء من النبات الذي يمتص الماء من التربة هو:",o:["الورقة","الزهرة","الساق","الجذر"],a:3},
+{s:2,k:"الضوء",q:"تتكون الظلال عندما:",o:["ينعكس الضوء عن مرآة","يعترض جسم معتم مسار الضوء","يمر الضوء عبر الزجاج","تطفأ الشمس"],a:1},
+{s:2,k:"الكهرباء",q:"ما الذي يلزم لإضاءة مصباح في دائرة كهربائية؟",o:["دائرة مغلقة ومصدر طاقة","دائرة مفتوحة","قطعة خشب فقط","ماء فقط"],a:0},
+{s:3,k:"جغرافية سوريا",q:"عاصمة الجمهورية العربية السورية هي:",o:["حلب","دمشق","حمص","اللاذقية"],a:1},
+{s:3,k:"جغرافية سوريا",q:"أطول نهر يجري في سوريا هو:",o:["العاصي","بردى","الفرات","اليرموك"],a:2},
+{s:3,k:"جغرافية سوريا",q:"أي دولة تقع إلى الشمال من سوريا؟",o:["الأردن","العراق","لبنان","تركيا"],a:3},
+{s:3,k:"تاريخ سوريا",q:"ظهرت أول أبجدية في العالم في مدينة:",o:["أوغاريت","تدمر","بصرى","حلب"],a:0},
+{s:3,k:"تاريخ سوريا",q:"من المواقع الأثرية في سوريا:",o:["الأهرامات","مدينة تدمر","برج إيفل","سور الصين العظيم"],a:1},
+{s:3,k:"المواطنة والمجتمع",q:"من حقوق الطفل:",o:["التعليم","العمل في سن مبكرة","ترك المدرسة","الحرمان من اللعب"],a:0},
+{s:3,k:"المواطنة والمجتمع",q:"من واجبات المواطن:",o:["إتلاف الحدائق العامة","رمي النفايات في الشارع","المحافظة على الممتلكات العامة","إهمال النظافة"],a:2},
+{s:4,e:1,k:"مفردات الإنجليزية",q:"The opposite of «big» is:",o:["tall","small","long","fast"],a:1},
+{s:4,e:1,k:"مفردات الإنجليزية",q:"Which one is a fruit?",o:["carrot","onion","apple","potato"],a:2},
+{s:4,e:1,k:"قواعد الإنجليزية",q:"She ___ to school every day.",o:["go","goes","going","gone"],a:1},
+{s:4,e:1,k:"قواعد الإنجليزية",q:"I ___ a student.",o:["is","are","be","am"],a:3},
+{s:4,e:1,k:"القراءة بالإنجليزية",q:"Sara has a cat. It is white and it likes milk. What color is the cat?",o:["Black","Brown","White","Gray"],a:2},
+{s:4,e:1,k:"القراءة بالإنجليزية",q:"Ali plays football on Friday. When does Ali play football?",o:["Monday","Friday","Sunday","Tuesday"],a:1}
+];
+var app=document.getElementById("app"),name="",i=0,ans=[];
+function esc(t){return String(t).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+function start(){
+app.innerHTML='<h1>اختبار تشخيصي لمستوى الصف الخامس</h1><p class="muted">منهاج الجمهورية العربية السورية – الرياضيات، اللغة العربية، العلوم، الاجتماعيات، اللغة الإنجليزية</p><div class="card"><p>'+Q.length+' سؤالًا من نوع اختيار من متعدد، ويغطي خمس مواد، ويستغرق نحو 40 دقيقة. في النهاية يظهر تقرير بنقاط القوة ونقاط الضعف.</p><label for="n">اسم الطالب</label><input id="n" type="text" autocomplete="off"><div class="nav"><span></span><button id="go">ابدأ الاختبار</button></div></div>';
+document.getElementById("go").onclick=function(){name=document.getElementById("n").value.trim();i=0;ans=[];show()};
+}
+function show(){
+var q=Q[i],h='<div class="bar"><i style="width:'+(i/Q.length*100)+'%"></i></div><p class="muted">السؤال '+(i+1)+' من '+Q.length+'</p><div class="card"'+(q.e?' dir="ltr"':'')+'><span class="tag">'+SUBJ[q.s]+'</span><p style="margin-top:10px">'+esc(q.q)+'</p>';
+q.o.forEach(function(t,j){h+='<button class="opt'+(ans[i]===j?' sel':'')+'" data-j="'+j+'">'+esc(t)+'</button>'});
+h+='</div><div class="nav"><button class="ghost" id="prev"'+(i?'':' disabled')+'>السابق</button><button id="next"'+(ans[i]===undefined?' disabled':'')+'>'+(i==Q.length-1?'إنهاء الاختبار':'التالي')+'</button></div>';
+app.innerHTML=h;
+Array.prototype.forEach.call(app.querySelectorAll(".opt"),function(b){b.onclick=function(){ans[i]=+b.dataset.j;show()}});
+document.getElementById("prev").onclick=function(){i--;show()};
+document.getElementById("next").onclick=function(){if(i==Q.length-1)result();else{i++;show()}};
+window.scrollTo(0,0);
+}
+function lv(p){return p>=80?["strong","قوي"]:p>=50?["mid","يحتاج مراجعة"]:["weak","ضعيف – أولوية للعلاج"]}
+function result(){
+var tot=0,sub=[],cnt=[],sk={},sko=[],h="",wr="";SUBJ.forEach(function(){sub.push(0);cnt.push(0)});
+Q.forEach(function(q,k){cnt[q.s]++;var key=q.s+"|"+q.k;if(!sk[key]){sk[key]={s:q.s,k:q.k,n:0,r:0};sko.push(key)}sk[key].n++;if(ans[k]===q.a){tot++;sub[q.s]++;sk[key].r++}});
+var p=Math.round(tot/Q.length*100);
+h='<h1>تقرير المستوى'+(name?' – '+esc(name):'')+'</h1><div class="card"><p class="big">'+tot+' / '+Q.length+'</p><p class="muted">النسبة الكلية '+p+'%</p></div><h2>المستوى حسب المادة</h2><div class="card">';
+SUBJ.forEach(function(s,x){var pp=Math.round(sub[x]/cnt[x]*100),l=lv(pp);h+='<div class="row"><span>'+s+' ('+sub[x]+'/'+cnt[x]+')</span><span class="b '+l[0]+'">'+l[1]+'</span></div><div class="bar"><i style="width:'+pp+'%"></i></div>'});
+h+='</div><h2>المهارات التي تحتاج علاجًا</h2><div class="card">';
+sko.map(function(x){return sk[x]}).sort(function(a,b){return a.r/a.n-b.r/b.n}).forEach(function(z){var pp=Math.round(z.r/z.n*100);if(pp<100){var l=lv(pp);wr+='<div class="row"><span>'+SUBJ[z.s]+': '+z.k+' ('+z.r+'/'+z.n+')</span><span class="b '+l[0]+'">'+l[1]+'</span></div>'}});
+h+=(wr||'<p>لا توجد نقاط ضعف ظاهرة في هذا الاختبار، أحسنت!</p>')+'</div><h2>مراجعة الإجابات</h2><div class="card">';
+Q.forEach(function(q,k){if(ans[k]!==q.a){h+='<div class="rev"><p>'+esc(q.q)+'</p><p><b class="w">إجابة الطالب:</b> '+esc(q.o[ans[k]])+'</p><p><b class="r">الإجابة الصحيحة:</b> '+esc(q.o[q.a])+'</p></div>'}});
+if(tot==Q.length)h+='<p>كل الإجابات صحيحة.</p>';
+h+='</div><div class="nav"><button class="ghost" onclick="window.print()">طباعة التقرير</button><button id="again">إعادة الاختبار</button></div>';
+app.innerHTML=h;document.getElementById("again").onclick=start;window.scrollTo(0,0);
+}
+start();
+</script>
+</body>
+</html>
